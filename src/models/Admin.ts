@@ -25,10 +25,6 @@ const AdminSchema = new Schema({
     type: String,
     default: "admin",
   },
-  organization: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Organization",
-  },
   createdAt: { type: Date, default: Date.now },
 });
 const Admin = mongoose.models.Admin || mongoose.model("Admin", AdminSchema);

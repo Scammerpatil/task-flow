@@ -31,7 +31,7 @@ const Team = () => {
             {teamMember ? (
               teamMember.map((member: TeamMember, index) => (
                 <tr
-                  key={member._id}
+                  key={index}
                   className="table-row border border-base-content border-b"
                 >
                   <td>{index + 1}</td>

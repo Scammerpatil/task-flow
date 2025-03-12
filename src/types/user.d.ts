@@ -4,6 +4,7 @@ export interface Organization {
   _id?: mongoose.Schema.Types.ObjectId;
   name: string;
   domain: string;
+  teams: Team[];
   admin: Admin;
   manager: Manager;
   teamMembers: TeamMember[];
@@ -27,6 +28,7 @@ export interface Manager {
   profileImage: string;
   role: "manager";
   organization: Organization;
+  isApproved: boolean;
   team: TeamMember[];
 }
 
@@ -34,7 +36,9 @@ export interface TeamMember {
   _id?: mongoose.Schema.Types.ObjectId;
   name: string;
   email: string;
-  password: string;
+  profileImage: string;
+  isApproved: boolean;
+  phone: string;
   role: "team-member";
   manager: Manager;
   organization: Organization;
@@ -45,7 +49,28 @@ export interface Task {
   _id?: mongoose.Schema.Types.ObjectId;
   title: string;
   description: string;
-  status: "pending" | "in-progress" | "completed";
+  project: Project;
+  status?: "pending" | "in-progress" | "completed";
   assignedTo: TeamMember;
-  createdAt: Date;
+  createdAt?: Date;
+}
+
+export interface Team {
+  _id?: mongoose.Schema.Types.ObjectId;
+  name: string;
+  domain: string;
+  members: TeamMember[];
+  manager: Manager;
+  createdAt?: Date;
+}
+
+export interface Project {
+  _id?: mongoose.Schema.Types.ObjectId;
+  title: string;
+  description: string;
+  status: "pending" | "in-progress" | "completed";
+  organization: Organization;
+  team?: Team;
+  createdAt?: Date;
+  tasks?: Task[];
 }

@@ -47,7 +47,13 @@ export async function middleware(req: NextRequest) {
       console.log("Token verification failed, redirecting to login");
       return NextResponse.redirect(new URL("/", req.nextUrl.origin));
     }
-    const { role } = user.data;
+    const { role, isApproved } = user.data;
+    if (!isApproved) {
+      console.log("User not approved, redirecting to login");
+      return NextResponse.redirect
+        ? NextResponse.redirect(new URL("/not-approved", req.nextUrl.origin))
+        : NextResponse.next();
+    }
     const dashboardPath = `/${role}/dashboard`;
     if (isPublicPath) {
       return NextResponse.redirect(new URL(dashboardPath, req.nextUrl.origin));

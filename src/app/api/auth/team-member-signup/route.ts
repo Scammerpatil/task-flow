@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import Organization from "@/models/Organisation";
 import TeamMember from "@/models/TeamMember";
+import Team from "@/models/Team";
 
 dbConfig();
 export async function POST(req: NextRequest) {
@@ -27,15 +28,18 @@ export async function POST(req: NextRequest) {
       password: encryptedPassword,
       role: formData.role,
       profileImage: formData.profileImage,
-      organization: formData.oraganization,
     });
+    const team = await Team.findById(formData.team);
+    if (!team) {
+      return NextResponse.json(
+        { message: "Team does not exist" },
+        { status: 400 }
+      );
+    }
     await newTeamMember.save();
-    const organisation = await Organization.findById(formData.oraganization);
-    organisation.teamMembers.push(newTeamMember._id);
-    const manager = await Manager.findById(organisation.manager);
-    manager.team.push(newTeamMember._id);
-    await manager.save();
-    await organisation.save();
+    team.members.push(newTeamMember._id);
+    await team.save();
+
     return NextResponse.json(
       { message: "Manager created successfully" },
       { status: 200 }

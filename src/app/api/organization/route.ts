@@ -21,9 +21,23 @@ export async function GET(req: NextRequest) {
     if (!admin) {
       return NextResponse.redirect("/login");
     }
-    const organization = await Organization.findOne({ admin: admin._id })
+    const organization = await Organization.findOne({
+      admin: admin._id,
+    })
       .populate("admin")
-      .populate("manager");
+      .populate("teams")
+      .populate({
+        path: "teams",
+        populate: {
+          path: "manager",
+        },
+      })
+      .populate({
+        path: "teams",
+        populate: {
+          path: "members",
+        },
+      });
     return NextResponse.json({ organization }, { status: 200 });
   } catch (error) {
     console.log(error);

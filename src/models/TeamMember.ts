@@ -25,9 +25,9 @@ const TeamMemberSchema = new Schema({
     type: String,
     default: "team-member",
   },
-  organization: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Organization",
+  isApproved: {
+    type: Boolean,
+    default: false,
   },
   assignedTasks: [
     {

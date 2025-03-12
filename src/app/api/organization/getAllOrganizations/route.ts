@@ -1,5 +1,8 @@
+import dbConfig from "@/middlewares/db.config";
 import Organization from "@/models/Organisation";
 import { NextResponse } from "next/server";
+
+dbConfig();
 
 export async function GET() {
   try {

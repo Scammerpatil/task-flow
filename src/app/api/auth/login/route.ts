@@ -14,11 +14,9 @@ export async function POST(req: NextRequest) {
   if (formData.role === "admin") {
     // Find Admin
     const admin = await Admin.findOne({ email: formData.email });
-    console.log(admin);
     if (!admin) {
       return NextResponse.json({ message: "Admin not found" }, { status: 404 });
     }
-    // Compare Password
     const isMatch = bcrypt.compareSync(formData.password, admin.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -32,6 +30,7 @@ export async function POST(req: NextRequest) {
       email: admin.email,
       role: admin.role,
       profileImage: admin.profileImage,
+      isApproved: true,
     };
     const token = jwt.sign(data, process.env.JWT_SECRET!);
     const response = NextResponse.json({
@@ -55,7 +54,6 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
-    // Compare Password
     const isMatch = bcrypt.compareSync(formData.password, manager.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -68,6 +66,7 @@ export async function POST(req: NextRequest) {
       name: manager.name,
       email: manager.email,
       role: manager.role,
+      isApproved: manager.isApproved,
       profileImage: manager.profileImage,
     };
     const token = jwt.sign(data, process.env.JWT_SECRET!);
@@ -105,6 +104,7 @@ export async function POST(req: NextRequest) {
       name: teamMember.name,
       email: teamMember.email,
       role: teamMember.role,
+      isApproved: teamMember.isApproved,
       profileImage: teamMember.profileImage,
     };
     const token = jwt.sign(data, process.env.JWT_SECRET!);

@@ -1,4 +1,5 @@
 "use client";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,6 +11,7 @@ const SignUp = () => {
     password: "",
     role: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const handleSubmit = async () => {
     if (!formData.email || !formData.password) {
@@ -23,14 +25,13 @@ const SignUp = () => {
         router.push(data.data.route);
         return data.data.message;
       },
-      error: (err: unknown) => {
-        console.log(err);
+      error: (err: any) => {
         return err.response.data.message;
       },
     });
   };
   return (
-    <div className="flex justify-center items-center w-full bg-base-200 px-5 py-5 h-[calc(100vh-5rem)]">
+    <div className="flex justify-center items-center w-full bg-base-200 px-5 py-5 h-[calc(100vh-5.8rem)]">
       <div className="xl:max-w-7xl bg-base-100 drop-shadow-xl border border-base-content/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-5">
         <div className="sm:w-[60%] lg:w-[50%] bg-cover bg-center items-center justify-center hidden md:flex ">
           <img src="bg.svg" alt="login" className="h-[500px]" />
@@ -64,21 +65,36 @@ const SignUp = () => {
                 <option value="manager">Manager</option>
                 <option value="team_member">Team Member</option>
               </select>
-              <input
-                type="Password"
-                placeholder="Enter Your Password"
-                className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
-                value={formData.password}
-                onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
-                }}
-              />
+              <label className="input input-primary input-bordered flex items-center gap-2">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter Your Password"
+                  className="w-full text-base-content placeholder:text-base-content/70"
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                  }}
+                />
+                {showPassword ? (
+                  <IconEyeOff
+                    size={20}
+                    className="cursor-pointer text-base-content"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <IconEye
+                    size={20}
+                    className="cursor-pointer text-base-content"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </label>
               <div className="flex flex-col md:flex-row gap-2 md:gap-4 justify-center items-center">
                 <button
                   className="btn btn-outline btn-primary btn-block max-w-[200px]"
                   onClick={handleSubmit}
                 >
-                  Sign Up
+                  Login
                 </button>
               </div>
               <p className="text-center mt-3 text-base text-base-content">
@@ -87,7 +103,7 @@ const SignUp = () => {
                   className="text-primary cursor-pointer"
                   onClick={() => router.push("/signup")}
                 >
-                  signup
+                  Sign Up
                 </span>
               </p>
             </div>

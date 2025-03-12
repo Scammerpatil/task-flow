@@ -27,9 +27,6 @@ export async function POST(req: NextRequest) {
       organization: formData.oraganization,
     });
     await newManager.save();
-    const organisation = await Organization.findById(formData.oraganization);
-    organisation.manager = newManager._id;
-    await organisation.save();
     return NextResponse.json(
       { message: "Manager created successfully" },
       { status: 200 }

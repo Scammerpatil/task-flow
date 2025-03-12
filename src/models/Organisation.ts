@@ -14,15 +14,16 @@ const OrganizationSchema = new Schema({
     ref: "Admin",
     unique: true,
   },
-  manager: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Manager",
-    unique: true,
-  },
-  teamMembers: [
+  teams: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "TeamMember",
+      ref: "Team",
+    },
+  ],
+  projects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
     },
   ],
   createdAt: { type: Date, default: Date.now },

@@ -1,10 +1,12 @@
 "use client";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
@@ -33,7 +35,7 @@ const SignUp = () => {
         router.push("/login");
         return "Account Created Successfully";
       },
-      error: (err: unknown) => {
+      error: (err: any) => {
         console.log(err);
         return err.response.data.message;
       },
@@ -61,7 +63,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center w-full bg-base-200 px-5 py-5 h-[calc(100vh-5rem)]">
+    <div className="flex justify-center items-center w-full bg-base-200 px-5 h-[calc(100vh-5.8rem)]">
       <div className="xl:max-w-7xl bg-base-100 drop-shadow-xl border border-base-content/20 w-full rounded-md flex justify-between items-stretch px-5 xl:px-5 py-5">
         <div className="sm:w-[60%] lg:w-[50%] bg-cover bg-center items-center justify-center hidden md:flex ">
           <img src="sider.svg" alt="login" className="h-[500px]" />
@@ -85,6 +87,7 @@ const SignUp = () => {
               <div className="flex flex-col sm:flex-row gap-3 text-base-content">
                 <input
                   type="email"
+                  name="email"
                   placeholder="Enter Your Email"
                   className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
                   value={formData.email}
@@ -93,7 +96,10 @@ const SignUp = () => {
                   }}
                 />
                 <input
-                  type="text"
+                  type="number"
+                  name="phone"
+                  minLength={10}
+                  maxLength={10}
                   placeholder="Enter Your Contact No"
                   className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
                   value={formData.phone}
@@ -102,21 +108,43 @@ const SignUp = () => {
                   }}
                 />
               </div>
-              <input
-                type="file"
-                className="file-input file-input-bordered w-full text-base-content"
-                accept="image/* .png .jpeg .jpg"
-                onChange={handleProfileImageChange}
-              />
-              <input
-                type="Password"
-                placeholder="Enter Your Password"
-                className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
-                value={formData.password}
-                onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
-                }}
-              />
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">
+                    Profile Image <span className="text-error">*</span>
+                  </span>
+                </label>
+                <input
+                  type="file"
+                  className="file-input file-input-bordered file-input-primary w-full text-base-content"
+                  accept="image/* .png .jpeg .jpg"
+                  onChange={handleProfileImageChange}
+                />
+              </div>
+              <label className="input input-primary input-bordered flex items-center gap-2">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter Your Password"
+                  className="w-full text-base-content placeholder:text-base-content/70"
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                  }}
+                />
+                {showPassword ? (
+                  <IconEyeOff
+                    size={20}
+                    className="cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <IconEye
+                    size={20}
+                    className="cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </label>
               <div className="flex items-center gap-1.5  justify-start pl-2">
                 <div className="form-control">
                   <label className="label cursor-pointer">

@@ -16,14 +16,14 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <IconHome width="24" height="24" />,
   },
   {
-    title: "Manage Users",
-    path: "/admin/manage-users",
-    icon: <IconUsers width="24" height="24" />,
-  },
-  {
     title: "Manage Oragnizations",
     path: "/admin/manage-organizations",
     icon: <IconManualGearbox width="24" height="24" />,
+  },
+  {
+    title: "Manage Users",
+    path: "/admin/manage-users",
+    icon: <IconUsers width="24" height="24" />,
   },
   {
     title: "Projects Overview",

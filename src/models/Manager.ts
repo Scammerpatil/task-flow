@@ -26,16 +26,13 @@ const ManagerSchema = new Schema({
     default: "manager",
   },
   organization: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Organization",
-    required: true,
   },
-  team: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "TeamMember",
-    },
-  ],
+  isApproved: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: { type: Date, default: Date.now },
 });
 const Manager =
