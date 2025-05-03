@@ -22,14 +22,45 @@ const SignUp = () => {
     oraganization: "",
   });
   const router = useRouter();
-  const handleSubmit = async () => {
+  const formDataChecker = () => {
     if (
       !formData.name ||
       !formData.email ||
       !formData.phone ||
-      !formData.password
+      !formData.password ||
+      !formData.profileImage ||
+      !formData.team ||
+      !formData.oraganization
     ) {
-      toast.error("Please fill all the fields");
+      return false;
+    }
+    if (formData.phone.length !== 10) {
+      return false;
+    }
+    if (
+      !formData.email.includes("@") ||
+      !formData.email.includes(".") ||
+      formData.email.length < 5
+    ) {
+      return false;
+    }
+    if (formData.password.length < 6) {
+      return false;
+    }
+    if (formData.profileImage.length < 5) {
+      return false;
+    }
+    if (formData.name.length < 3) {
+      return false;
+    }
+    if (formData.phone.length !== 10) {
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = async () => {
+    if (!formDataChecker()) {
+      toast.error("Please fill all the fields correctly");
       return;
     }
     const response = axios.post("/api/auth/team-member-signup", { formData });
@@ -173,7 +204,10 @@ const SignUp = () => {
               >
                 <option value="">Select Organization</option>
                 {allOrganizations.map((organization: Organization) => (
-                  <option key={organization._id} value={organization._id}>
+                  <option
+                    key={organization._id as unknown as string}
+                    value={organization._id as unknown as string}
+                  >
                     {`${organization.name} - ${organization.domain}`}
                   </option>
                 ))}
@@ -187,7 +221,10 @@ const SignUp = () => {
                 <option value="">Select Team</option>
                 {team.length !== 0 ? (
                   team.map((team: Team) => (
-                    <option key={team._id} value={team._id}>
+                    <option
+                      key={team._id as unknown as string}
+                      value={team._id as unknown as string}
+                    >
                       {`${team.name} - ${team.domain}`}
                     </option>
                   ))

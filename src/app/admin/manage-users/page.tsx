@@ -34,10 +34,10 @@ const ManageUserPage = () => {
       <h1 className="text-4xl font-bold text-center uppercase mb-6">
         Manage Your Managers
       </h1>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto bg-base-300 rounded-lg p-5">
         <table className="table table-zebra">
           {/* head */}
-          <thead>
+          <thead className="text-base">
             <tr>
               <th>#</th>
               <th>Name</th>
@@ -73,7 +73,10 @@ const ManageUserPage = () => {
                       <button
                         className="btn btn-secondary"
                         onClick={() => {
-                          handleApproveManager(manager._id, false);
+                          handleApproveManager(
+                            manager._id as unknown as string,
+                            false
+                          );
                         }}
                       >
                         Revoke
@@ -82,7 +85,10 @@ const ManageUserPage = () => {
                       <button
                         className="btn btn-primary"
                         onClick={() => {
-                          handleApproveManager(manager._id, true);
+                          handleApproveManager(
+                            manager._id as unknown as string,
+                            true
+                          );
                         }}
                       >
                         Approve

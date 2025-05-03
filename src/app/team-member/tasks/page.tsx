@@ -31,9 +31,9 @@ const TaskPage = () => {
         Manage Your Tasks
       </h1>
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table table-zebra bg-base-300 rounded-lg">
           {/* head */}
-          <thead>
+          <thead className="bg-base-200 text-base-content text-base">
             <tr>
               <th>#</th>
               <th>Title</th>
@@ -45,13 +45,13 @@ const TaskPage = () => {
             {/* row 1 */}
             {tasks.length > 0 ? (
               tasks.map((task, index) => (
-                <tr key={task._id}>
+                <tr key={task._id as unknown as string}>
                   <td>{index + 1}</td>
                   <td>{task.title}</td>
                   <td>{task.description}</td>
                   <td>
                     {task.status === "completed" ? (
-                      <span className="text-success capitalize">
+                      <span className="btn btn-sm btn-success text-success-content capitalize">
                         {task.status}
                       </span>
                     ) : (
@@ -59,7 +59,10 @@ const TaskPage = () => {
                         className="select select-bordered"
                         value={task.status}
                         onChange={(e) =>
-                          handleTaskStatusChange(task._id, e.target.value)
+                          handleTaskStatusChange(
+                            task._id as unknown as string,
+                            e.target.value
+                          )
                         }
                       >
                         <option value="">Select Task Status</option>

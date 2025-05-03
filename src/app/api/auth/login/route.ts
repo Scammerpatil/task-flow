@@ -10,7 +10,6 @@ dbConfig();
 
 export async function POST(req: NextRequest) {
   const { formData } = await req.json();
-  console.log(formData);
   if (formData.role === "admin") {
     // Find Admin
     const admin = await Admin.findOne({ email: formData.email });

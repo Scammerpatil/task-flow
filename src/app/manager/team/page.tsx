@@ -58,11 +58,13 @@ const Team = () => {
             <div className="text-center py-4 text-2xl font-semibold bg-base-100 rounded-lg">
               {team.name}
             </div>
-            <div className="card-body mt-4">
-              <h2 className="card-title text-lg">{team.domain}</h2>
-              <div className="overflow-x-auto">
+            <div className="card-body">
+              <h2 className="card-title text-lg alert alert-info">
+                {team.domain}
+              </h2>
+              <div className="overflow-x-auto bg-base-300 rounded-lg">
                 <table className="table table-zebra">
-                  <thead className="text-base">
+                  <thead className="text-base bg-base-100">
                     <tr>
                       <td>#</td>
                       <td>Name</td>
@@ -105,7 +107,10 @@ const Team = () => {
                               <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                  handleApprove(member._id, true);
+                                  handleApprove(
+                                    member._id as unknown as string,
+                                    true
+                                  );
                                 }}
                               >
                                 Approve

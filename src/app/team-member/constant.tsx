@@ -20,19 +20,9 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <IconListCheck width="24" height="24" />,
   },
   {
-    title: "Project Files",
-    path: "/team-member/files",
-    icon: <IconFileText width="24" height="24" />,
-  },
-  {
     title: "Team Chat",
     path: "/team-member/chat",
     icon: <IconUsers width="24" height="24" />,
-  },
-  {
-    title: "Settings",
-    path: "/team-member/settings",
-    icon: <IconSettings width="24" height="24" />,
   },
   {
     title: "Support",

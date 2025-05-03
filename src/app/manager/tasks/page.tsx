@@ -33,9 +33,9 @@ const ManageTask = () => {
       <h1 className="text-3xl uppercase text-pretty font-semibold mb-4 text-center">
         Manage Your Projects and Tasks
       </h1>
-      <div className="overflow-x-auto my-5">
-        <table className="table table-zebra">
-          <thead>
+      <div className="overflow-x-auto my-5 bg-base-300 p-4 rounded-xl shadow-md">
+        <table className="table table-zebra bg-base-100">
+          <thead className="text-base">
             <tr>
               <th>#</th>
               <th>Project Name</th>
@@ -74,7 +74,10 @@ const ManageTask = () => {
                         className="select select-bordered"
                         value={project.status}
                         onChange={(e) =>
-                          handleProjectStatusUpdate(project._id, e.target.value)
+                          handleProjectStatusUpdate(
+                            project._id as unknown as string,
+                            e.target.value
+                          )
                         }
                       >
                         <option value="">Select Task Status</option>
@@ -93,7 +96,7 @@ const ManageTask = () => {
                       <button
                         className="btn btn-primary btn-outline"
                         onClick={() => {
-                          setSelectedProject(project._id);
+                          setSelectedProject(project._id as unknown as string);
                           (
                             document.getElementById(
                               "addTask"
@@ -120,25 +123,25 @@ const ManageTask = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="text-center">
+                <td colSpan={6} className="text-center">
                   No projects found
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-        <button
-          className="btn btn-primary mt-5 mx-auto"
-          onClick={() => {
-            (
-              document.getElementById("addProject") as HTMLDialogElement
-            ).showModal();
-          }}
-        >
-          Add Project
-        </button>
       </div>
       <AddProject />
+      <button
+        className="btn btn-primary mt-5 mx-auto w-full"
+        onClick={() => {
+          (
+            document.getElementById("addProject") as HTMLDialogElement
+          ).showModal();
+        }}
+      >
+        Add Project
+      </button>
       {selectedProject && <AddTask projectID={selectedProject} />}
     </>
   );

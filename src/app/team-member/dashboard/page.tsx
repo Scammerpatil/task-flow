@@ -1,51 +1,110 @@
 "use client";
-import React from "react";
-import { SIDENAV_ITEMS } from "../constant";
-import { useAuth } from "@/context/AuthProvider";
 
-const UserDashboardPage = () => {
-  const { user } = useAuth();
-  if (!user) return null;
-  return (
-    <div className="w-full flex items-center justify-center flex-col gap-4">
-      <h1 className="text-3xl font-bold text-primary mb-4">
-        Welcome, {user?.name}!
-      </h1>
-      <div className="flex flex-row flex-wrap gap-4 items-center justify-center">
-        {SIDENAV_ITEMS.map((item) => {
-          return (
-            <DashboardCard
-              title={item.title}
-              icon={item.icon}
-              path={item.path}
-              key={item.title}
-            />
-          );
-        })}
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
+import { toast } from "react-hot-toast";
+
+export default function TeamMemberDashboard() {
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    assignedTasks: 0,
+    completedTasks: 0,
+    pendingTasks: 0,
+    organizationName: "",
+    projectName: "",
+  });
+
+  const fetchDashboardData = async () => {
+    try {
+      const res = await axios.get("/api/teamMembers/dashboard");
+      setStats(res.data);
+    } catch (error) {
+      toast.error("Failed to load dashboard");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
       </div>
-    </div>
-  );
-};
+    );
+  }
 
-const DashboardCard = ({
-  title,
-  icon,
-  path,
-}: {
-  title: string;
-  path: string;
-  icon: React.ReactNode;
-}) => {
+  const data = [
+    { name: "Assigned", value: stats.assignedTasks },
+    { name: "Completed", value: stats.completedTasks },
+    { name: "Pending", value: stats.pendingTasks },
+  ];
+
   return (
-    <a
-      href={path}
-      key={title}
-      className="card bg-base-300 w-1/3 shadow-lg p-4 flex items-center space-x-4 hover:bg-primary hover:text-primary-content transition"
-    >
-      <span className="text-3xl">{icon}</span>
-      <h2 className="text-lg font-semibold">{title}</h2>
-    </a>
-  );
-};
+    <>
+      <h1 className="text-2xl font-bold uppercase text-center">
+        Team Member Dashboard
+      </h1>
 
-export default UserDashboardPage;
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="stats shadow bg-base-100">
+          <div className="stat">
+            <div className="stat-title">Assigned Tasks</div>
+            <div className="stat-value">{stats.assignedTasks}</div>
+          </div>
+        </div>
+
+        <div className="stats shadow bg-base-100">
+          <div className="stat">
+            <div className="stat-title">Completed Tasks</div>
+            <div className="stat-value text-success">
+              {stats.completedTasks}
+            </div>
+          </div>
+        </div>
+
+        <div className="stats shadow bg-base-100">
+          <div className="stat">
+            <div className="stat-title">Pending Tasks</div>
+            <div className="stat-value text-warning">{stats.pendingTasks}</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="card shadow bg-base-100 p-4">
+        <h2 className="text-lg font-semibold mb-2">Task Distribution</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis allowDecimals={false} />
+            <Tooltip />
+            <Bar dataKey="value" fill="#3b82f6" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="card shadow bg-base-100 p-4">
+        <h2 className="text-lg font-semibold mb-2">Organization & Project</h2>
+        <p>
+          <strong>Organization:</strong> {stats.organizationName || "N/A"}
+        </p>
+        <p>
+          <strong>Project:</strong> {stats.projectName || "N/A"}
+        </p>
+      </div>
+    </>
+  );
+}

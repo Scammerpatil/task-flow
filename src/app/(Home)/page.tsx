@@ -14,14 +14,14 @@ export default function Home() {
             ease.
           </p>
           <a
-            href="#"
+            href="/login"
             className="btn btn-primary text-base font-medium text-center rounded-lg mr-4"
           >
             Get Started
             <IconCircleChevronRight />
           </a>
           <a
-            href="#"
+            href="/about"
             className="btn btn-outline text-base font-medium text-center rounded-lg mr-4"
           >
             Learn More

@@ -42,15 +42,6 @@ const SignUp = () => {
           </h1>
           <div className="w-full mt-5 sm:mt-8">
             <div className="mx-auto w-full sm:max-w-md md:max-w-lg flex flex-col gap-5">
-              <input
-                type="email"
-                placeholder="Enter Your Email"
-                className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                }}
-              />
               <select
                 className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
                 value={formData.role}
@@ -65,6 +56,15 @@ const SignUp = () => {
                 <option value="manager">Manager</option>
                 <option value="team_member">Team Member</option>
               </select>
+              <input
+                type="email"
+                placeholder="Enter Your Email"
+                className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/70"
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                }}
+              />
               <label className="input input-primary input-bordered flex items-center gap-2">
                 <input
                   type={showPassword ? "text" : "password"}

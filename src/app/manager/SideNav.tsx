@@ -46,11 +46,9 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                   <span className="text-sm">
                     <IconChevronRight />
                   </span>
-                  <Link href={`/${pathSegments.slice(0, index + 1).join("/")}`}>
-                    <span className="text-base capitalize hover:text-primary transition">
-                      {segment.replace(/-/g, " ")}
-                    </span>
-                  </Link>
+                  <span className="text-base capitalize hover:text-primary transition">
+                    {segment.replace(/-/g, " ")}
+                  </span>
                 </React.Fragment>
               ))}
             </div>
@@ -108,7 +106,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                     <div className="flex flex-col">
                       <Link
                         className="text-left px-4 py-2 text-base-content hover:bg-base-200 transition duration-200"
-                        href={`/user/my-account`}
+                        href={`/${user.role}/my-account`}
                       >
                         My Account
                       </Link>
@@ -126,7 +124,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div>
             {" "}
-            <main className="overflow-y-auto h-[calc(100vh-5.3rem)] bg-base-100 p-10 text-base-content">
+            <main className="overflow-y-auto h-[calc(100vh-5rem)] bg-base-100 p-10 text-base-content">
               {children}
             </main>
           </div>
@@ -139,7 +137,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
           ></label>
           <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
             <Link
-              href="/user/dashboard"
+              href={`/${user.role}/dashboard`}
               className="flex h-16 w-full flex-row items-center justify-center space-x-3 border-b border-base-content md:justify-start md:px-6"
             >
               <span className="h-7 w-7 rounded-lg bg-base-200">

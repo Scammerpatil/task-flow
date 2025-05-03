@@ -25,16 +25,6 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <IconListCheck width="24" height="24" />,
   },
   {
-    title: "Reports",
-    path: "/manager/reports",
-    icon: <IconGraph width="24" height="24" />,
-  },
-  {
-    title: "Settings",
-    path: "/manager/settings",
-    icon: <IconSettings width="24" height="24" />,
-  },
-  {
     title: "Support",
     path: "/manager/support",
     icon: <IconHelpCircle width="24" height="24" />,

@@ -17,7 +17,7 @@ const SignUp = () => {
     profileImage: "",
   });
   const router = useRouter();
-  const handleSubmit = async () => {
+  const formDataChecker = () => {
     if (
       !formData.name ||
       !formData.email ||
@@ -25,7 +25,35 @@ const SignUp = () => {
       !formData.password ||
       !formData.profileImage
     ) {
-      toast.error("Please fill all the fields");
+      return false;
+    }
+    if (formData.phone.length !== 10) {
+      return false;
+    }
+    if (
+      !formData.email.includes("@") ||
+      !formData.email.includes(".") ||
+      formData.email.length < 5
+    ) {
+      return false;
+    }
+    if (formData.password.length < 6) {
+      return false;
+    }
+    if (formData.profileImage.length < 5) {
+      return false;
+    }
+    if (formData.name.length < 3) {
+      return false;
+    }
+    if (formData.phone.length !== 10) {
+      return false;
+    }
+    return true;
+  };
+  const handleSubmit = async () => {
+    if (!formDataChecker()) {
+      toast.error("Please fill all the fields correctly");
       return;
     }
     const response = axios.post("/api/auth/signup", { formData });
