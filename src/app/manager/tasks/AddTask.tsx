@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthProvider";
-import { Task, TeamMember } from "@/types/user";
+import { Task, Team, TeamMember } from "@/types/user";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ const AddTask = ({ projectID }: { projectID: any }) => {
     description: "",
     status: "pending",
     project: projectID,
-    assignedTo: user,
+    assignedTo: user as unknown as TeamMember,
   });
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -41,7 +41,7 @@ const AddTask = ({ projectID }: { projectID: any }) => {
     <dialog id="addTask" className="modal">
       <div className="modal-box w-11/12 max-w-5xl">
         <h3 className="font-bold text-xl uppercase text-center">
-          Hey, {user.name}
+          Hey, {user?.name}
         </h3>
         <div className="modal-box mx-auto bg-base-300 mt-5 space-y-5">
           <div className="form-control w-full">
@@ -72,14 +72,20 @@ const AddTask = ({ projectID }: { projectID: any }) => {
             <label className="label">Assign To</label>
             <select
               className="select select-bordered w-full"
-              value={newTask?.assignedTo}
+              value={newTask?.assignedTo as unknown as string}
               onChange={(e) =>
-                setNewTask({ ...newTask, assignedTo: e.target.value })
+                setNewTask({
+                  ...newTask,
+                  assignedTo: e.target.value as unknown as TeamMember,
+                })
               }
             >
               <option value="">Select Team Member</option>
               {teamMember.map((member) => (
-                <option value={member._id} key={member._id}>
+                <option
+                  value={member._id as unknown as string}
+                  key={member._id as unknown as string}
+                >
                   {member.name}
                 </option>
               ))}

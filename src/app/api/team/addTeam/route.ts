@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import Team from "@/models/Team";
 import Manager from "@/models/Manager";
@@ -7,7 +7,7 @@ import dbConfig from "@/middlewares/db.config";
 
 dbConfig();
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   if (!token) {
     return NextResponse.redirect("/login");

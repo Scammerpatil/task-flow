@@ -5,11 +5,13 @@ import axios, { AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 import { IconCloudUpload } from "@tabler/icons-react";
 import { useAuth } from "@/context/AuthProvider";
-import { Admin } from "@/types/user";
+import { Admin, Manager } from "@/types/user";
 
 const MyAccount = () => {
   const { user } = useAuth();
-  const [formData, setFormData] = useState<Admin>(user!);
+  const [formData, setFormData] = useState<Manager>(
+    user! as unknown as Manager
+  );
   const [editing, setEditing] = useState(false);
 
   if (!user) return <div className="text-center py-10">Loading...</div>;

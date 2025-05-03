@@ -1,15 +1,17 @@
+import { Admin, Manager, TeamMember } from "@/types/user";
 import { createContext, useState, useContext, ReactNode } from "react";
-import { User } from "@/types/user";
 
 interface AuthContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: Admin | TeamMember | Manager | null;
+  setUser: React.Dispatch<
+    React.SetStateAction<Admin | TeamMember | Manager | null>
+  >;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Admin | TeamMember | Manager | null>(null);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

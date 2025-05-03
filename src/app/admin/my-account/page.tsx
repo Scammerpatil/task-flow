@@ -9,7 +9,7 @@ import { Admin } from "@/types/user";
 
 const MyAccount = () => {
   const { user } = useAuth();
-  const [formData, setFormData] = useState<Admin>(user!);
+  const [formData, setFormData] = useState<Admin>(user! as unknown as Admin);
   const [editing, setEditing] = useState(false);
 
   if (!user) return <div className="text-center py-10">Loading...</div>;

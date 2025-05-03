@@ -51,7 +51,7 @@ const Chat = () => {
           <div
             key={msg._id}
             className={`chat ${
-              msg.sender._id === user._id ? "chat-end" : "chat-start"
+              msg.sender._id === user?._id ? "chat-end" : "chat-start"
             }`}
           >
             <div className="chat-image avatar">

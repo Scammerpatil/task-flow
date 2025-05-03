@@ -1,18 +1,18 @@
 "use client";
 
 import { useAuth } from "@/context/AuthProvider";
-import { Project } from "@/types/user";
+import { Manager, Organization, Project } from "@/types/user";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const AddProject = () => {
-  const { user } = useAuth();
+  const { user } = useAuth() as any;
   const [newProject, setNewProject] = useState<Project>({
     title: "",
     description: "",
     status: "pending",
-    organization: user.organization,
+    organization: user?.organization as any,
   });
   const addProject = async () => {
     if (newProject.title === "" || newProject.description === "") {
@@ -33,7 +33,7 @@ const AddProject = () => {
     <dialog id="addProject" className="modal">
       <div className="modal-box w-11/12 max-w-5xl">
         <h3 className="font-bold text-xl uppercase text-center">
-          Hey, {user.name}
+          Hey, {user?.name}
         </h3>
         <div className="modal-box mx-auto bg-base-300 mt-5 space-y-5">
           <div className="form-control w-full">
