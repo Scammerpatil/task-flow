@@ -48,37 +48,9 @@ const Header = () => {
           <Link href="/login" className="btn btn-accent">
             Login
           </Link>
-          <div className="dropdown dropdown-end">
-            <span
-              tabIndex={0}
-              className="flex items-center justify-center gap-3 h-full w-full btn btn-accent"
-            >
-              Sign Up <IconChevronDown />
-            </span>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow text-base-content"
-            >
-              <li>
-                <Link href="/signup" className="btn btn-ghost">
-                  Admin
-                </Link>
-              </li>
-              <li>
-                <Link href="/signup/manager-signup" className="btn btn-ghost">
-                  Manager
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/signup/team-member-signup"
-                  className="btn btn-ghost"
-                >
-                  Team Member
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <Link href="/signup" className="btn btn-accent">
+            Sign Up
+          </Link>
           <ThemeToggler />
         </div>
       </div>
