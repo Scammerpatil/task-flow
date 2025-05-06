@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import path, { basename } from "path";
 import ejs from "ejs";
 import fs from "fs";
 
@@ -15,9 +16,14 @@ export default async function POST(
   token: string,
   name: string
 ): Promise<boolean> {
-  const template = fs.readFileSync("./src/helper/mailTemplate.ejs", "utf-8");
+  if (!email || !token || !name) {
+    console.error("Missing required parameters:", { email, token, name });
+    return false;
+  }
+  const templatePath = path.join(process.cwd(), "src/helper/mailTemplate.ejs");
+  const template = fs.readFileSync(templatePath, "utf-8");
   const mailOptions = {
-    from: "EvidenceManagementSystem | No Reply <",
+    from: "Task Flow | No Reply <",
     to: email,
     subject: "Verify Email",
     html: ejs.render(template, { token, name }),
